@@ -22,7 +22,11 @@ class MainActivity: AppCompatActivity() {
 //    suppress textI18N syntax warning because it's not relevant to code
     @SuppressLint("SetTextI18n")
     fun setTime(Hours: Int, Minutes: Int) {
+
         tvShowTime.text = "$Hours:" + if (Minutes < 10) "0$Minutes" else "$Minutes"
+        val saveData = SaveData(applicationContext)
+        saveData.setAlarm(Hours, Minutes)
+
     }
 
 //    khi chúng ta cần app này chạy ở background trong 1 tgian dài, kể cả app đã bị đóng
@@ -38,4 +42,5 @@ class MainActivity: AppCompatActivity() {
 
 //    Tại android O: broad cast chỉ nhận: BOOT_COMPLETED, LOCAL_CHANGED, USB_DEVICE_ATTACHED
 
+//    khi mà chúng ta đặt báo thức thì hệ thống sẽ lưu giờ báo thức đó lại (để phần mềm alarm ko phải chạy liên tục ở background, tiết kiệm năng lượng, đây là cơ chế hoạt động từ Android O trở đi)
 }

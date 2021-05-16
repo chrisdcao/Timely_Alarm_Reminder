@@ -16,6 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--chúng ta muốn register broadcast receiver: nói vs hệ thống chúng ta có broadcast receiver, mỗi khi broadcast event xảy ra thì hệ thống sẽ báo tới người dùng -->
+        <receiver android:name=".myBroadcastReceiver">
+            <!--lọc ra event mà chúng ta muốn kích hoạt cụ thể-->
+            <intent-filter>
+                <!--tên hành động mà chúng ta muốn lọc ra-->
+                <action android:name="com.tester.alarmmanager"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
