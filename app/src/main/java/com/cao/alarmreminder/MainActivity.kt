@@ -25,25 +25,28 @@ class MainActivity: AppCompatActivity() {
         ##   onCreate: LOAD KHI STARTUP   ##
         ##                                ##
         ####################################
-     */
+    */
+    val CHANNEL_ID = "com.cao.alarmreminder.notificationChannelId"
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val saveData = SaveData(applicationContext)
-        tvShowTime.text = "${ saveData.getHour() }:${ saveData.getMinute() }"
+        val minuteDisplay = if (saveData.getMinute() < 10 ) "0${ saveData.getMinute() }" else "${ saveData.getMinute() }"
+        tvShowTime.text = "${ saveData.getHour() }:$minuteDisplay"
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        // Create the NotificationChannel
-        val name = getString(R.string.channel_name)
-        val descriptionText = getString(R.string.channel_description)
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val mChannel = NotificationChannel(Constants().CHANNEL_ID, name, importance)
-        mChannel.description = descriptionText
-        // Register the channel with the system; you can't change the importance
-        // or other notification behaviors after this
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(mChannel)
+            // Create the NotificationChannel
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
         }
     }
 
@@ -53,7 +56,7 @@ class MainActivity: AppCompatActivity() {
         ##   buSetTime: POPUP BẢNG CHỌN GIỜ ĐẶT BÁO THỨC (GIAO DIỆN CHỌN GIỜ)   ##
         ##                                                                      ##
         ##########################################################################
-     */
+    */
     fun buSetTime(view: View) {
         var popTime = PopTime()
         var fm = supportFragmentManager
@@ -66,7 +69,7 @@ class MainActivity: AppCompatActivity() {
         ##   setTime: CỦA BUTTON 'DONE' TRONG GIAO DIỆN   ##
         ##                                                ##
         ####################################################
-     */
+    */
     // this is what happen when the user click the SetTimeButton
     @SuppressLint("SetTextI18n")
     fun setTime(Hours: Int, Minutes: Int) {
@@ -74,6 +77,7 @@ class MainActivity: AppCompatActivity() {
         val savedata = SaveData(applicationContext)
         // như vậy là mỗi khi set alarm time chúng ta lưu thông tin time này vào trong file xml sharedPreferences có tên "myref" (trong SaveData.kt)
         savedata.SaveData(Hours, Minutes)
+        savedata.setAlarm()
     }
 
 }
