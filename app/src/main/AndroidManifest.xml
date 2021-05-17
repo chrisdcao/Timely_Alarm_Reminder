@@ -24,7 +24,7 @@
             <!--lọc ra event mà chúng ta muốn kích hoạt cụ thể-->
             <intent-filter>
                 <!--tên hành động mà chúng ta muốn lọc ra-->
-                <action android:name="com.tester.alarmmanager"/>
+                <action android:name="com.tester.alarmreminder"/>
                 <!--và thêm vào danh sách các hành động sẽ trigger chiếc alarm của chúng ta, là bao gồm cả System boot. Như vậy, tại mỗi lần boot của hệ thống, alarm sẽ được cài lại -->
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <category android:name="android.intent.category.DEFAULT"/>
