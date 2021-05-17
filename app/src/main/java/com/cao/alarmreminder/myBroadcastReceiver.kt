@@ -7,15 +7,22 @@ import android.content.Intent
 import android.widget.Toast
 
 class myBroadcastReceiver: BroadcastReceiver() {
+
     @SuppressLint("ShowToast")
 //    onReceive: sẽ được kích hoạt mỗi khi receive event của system hoạt động
     override fun onReceive(context: Context?, intent: Intent?) {
-//        intent sẽ không phải null trong đk này + Nếu intent là null thì nó đơn giản sẽ không thực hiện lệnh if này, chứ không tạo ra lỗi gì cả,
-//        nên chúng ta có thể suppress thay vì phải tạo safe call
-//        Trong ngoặc: nếu action chúng ta làm là action mà chúng ta muốn kích hoạt, chúng ta toast 1 đoạn text ra ngoài màn hình
-        if (intent!!.action.equals("com.tester.alarmmanager")) {
-            val b = intent.extras
+      /*
+          Trong ngoặc: nếu action chúng ta làm là action mà chúng ta muốn kích hoạt, chúng ta toast 1 đoạn text ra ngoài màn hình
+          Chúng ta liên tục để safe call, mặc dù khá chắc rằng intent sẽ ko null nhưng vẫn để để chẳng may nó có null thật thì ctrinh sẽ throw null exception dễ nhìn hơn
+      */
+        if (intent?.action.equals("com.tester.alarmmanager")) {
+            val b = intent?.extras
             Toast.makeText(context, b?.getString("message"), Toast.LENGTH_LONG).show()
         }
+        else if (intent?.action.equals("android.intent.action.BOOT_COMPLETED")) {
+            val saveData = SaveData(context!!)
+            saveData.setAlarm()
+        }
     }
+
 }

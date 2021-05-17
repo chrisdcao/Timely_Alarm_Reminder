@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cao.alarmreminder">
+    <!--chúng ta cần permission để biết khi nào system reboot (gọi tín hiệu broadcast receiver của boot), bởi thế chúng ta import permission vào đây-->
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -23,6 +25,8 @@
             <intent-filter>
                 <!--tên hành động mà chúng ta muốn lọc ra-->
                 <action android:name="com.tester.alarmmanager"/>
+                <!--và thêm vào danh sách các hành động sẽ trigger chiếc alarm của chúng ta, là bao gồm cả System boot. Như vậy, tại mỗi lần boot của hệ thống, alarm sẽ được cài lại -->
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
